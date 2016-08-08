@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
   word: {
     color: '#FFFFFF',
     textAlign: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    fontSize: 10,
   },
   card: {
     flex: 1,
