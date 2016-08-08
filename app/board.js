@@ -42,6 +42,8 @@ export default class Board extends Component {
 
 const styles = StyleSheet.create({
   board: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     // backgroundColor: '#dce2e5',
     // backgroundColor: '#000000',
   }

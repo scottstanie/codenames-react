@@ -5,6 +5,7 @@ import {
   View,
   TouchableHighlight
 } from 'react-native';
+import Dimensions from 'Dimensions';
 
 export default class Card extends Component {
   // static propTypes = {
@@ -31,14 +32,16 @@ export default class Card extends Component {
 
   render() {
     const {word, active, onClick} = this.props;
-    console.log('card: ' + word + ' active? ' + active);
+    // console.log('card: ' + word + ' active? ' + active);
+    // var {height, width} = Dimensions.get('window');
+    // console.log("Dimensions: " + height + ' ' + width);
     return (
       <TouchableHighlight style={styles.touchable}
                           onPress={this._onPress} >
    
         <View style={active ? styles.activeCard : styles.card } >
           <Text style={styles.word} >
-            {this.state.pressing ? 'EEK!' : 'PUSH ME'} {word}
+            {word}
           </Text>
         </View>
       </TouchableHighlight>
@@ -50,26 +53,33 @@ export default class Card extends Component {
 const styles = StyleSheet.create({
   word: {
     color: '#FFFFFF',
+    textAlign: 'center',
+    alignItems: 'center'
   },
   card: {
+    flex: 1,
+    width: 350/5,
     backgroundColor: 'red',
-    
-    borderWidth: 0,
+    borderWidth: 1,
     borderRadius: 5,
     // height: 200,
     // width: 200,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   activeCard: {
+    flex: 1,
+    width: 350/5,
     backgroundColor: 'grey',
     borderColor: 'green',
     borderWidth: 2,
     borderRadius: 5,
     // height: 200,
     // width: 200,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   touchable: {
-    borderRadius: 1
+    // borderRadius: 1
   },
 });
