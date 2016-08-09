@@ -40,7 +40,7 @@ class AwesomeProject extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{ title: 'My Initial Scene', index: 0 }}
+        initialRoute={{ title: 'The Initial Scene', index: 0 }}
         renderScene={(route, navigator) =>
           <MyScene
             title={route.title}
