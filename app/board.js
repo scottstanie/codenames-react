@@ -18,6 +18,9 @@ export default class Board extends Component {
 
   render () {
     // console.log(this.props);
+    // <View onLayout={(event) => {
+    // var {x, y, width, height} = event.nativeEvent.layout;
+    // }} />
     console.log('board state:');
     console.log(this.state.activeIndex);
     const activeIndex = this.state.activeIndex;
@@ -30,8 +33,7 @@ export default class Board extends Component {
               onClick={() => this.setCardActive(idx)}
               key={idx} />
     );
-    // console.log('in board. cards; ');
-    // console.log(cards[0]);
+    
     return (
       <View style={styles.board}>
         {cards}

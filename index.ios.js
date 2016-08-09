@@ -7,15 +7,14 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
+  Navigator,
   StyleSheet,
   Text,
   View
 } from 'react-native';
-// import Card from 'app/card'
+
 import Board from './app/board'
-
-
-// .get(formatUrl('/api/cards/?game=43&count=25'))
+import MyScene from './app/myscene';
 
 
 class AwesomeProject extends Component {
@@ -29,26 +28,45 @@ class AwesomeProject extends Component {
     fetch(fetchUrl, {method: 'GET'})
     .then((response) => {
       response.json().then((json) => {
-        // console.log('then: json: ' + json.results)
         this.setState({'cards' : json.results});
-        // console.log('this state: ' + json.results)
-
       }).done();
     }).done();
   }
   
-  componentDidMount(){
-    let cards = this.loadCards();
-    // this.setState({'cards': cards})
+  componentDidMount() {
+    this.loadCards();
   }
 
   render() {
-    // console.log('index render state: ');
-    // console.log(this.state);
     return (
-      <View style={styles.container}>
-        <Board cards={this.state.cards} activeIndex={null} />
-      </View>
+      <Navigator
+        initialRoute={{ title: 'My Initial Scene', index: 0 }}
+        renderScene={(route, navigator) =>
+          <MyScene
+            title={route.title}
+
+            // Function to call when a new scene should be displayed           
+            onForward={ () => {    
+              const nextIndex = route.index + 1;
+              navigator.push({
+                title: 'Scene ' + nextIndex,
+                index: nextIndex,
+              });
+            }}
+
+            // Function to call to go back to the previous scene
+            onBack={() => {
+              if (route.index > 0) {
+                navigator.pop();
+              }
+            }}
+          />
+        }
+      />
+
+      // <View style={styles.container}>
+      //   <Board cards={this.state.cards} activeIndex={null} />
+      // </View>
     );
   }
 }
