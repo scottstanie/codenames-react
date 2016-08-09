@@ -3,8 +3,8 @@ import CookieManager from 'react-native-cookies';
 import LoggedIn from './LoggedIn'
 
 // Change these to reflect
-const LOGIN_URL = "http://localhost:8000/api/login/";
-const HOME_URL = "http://localhost:8000/";
+const LOGIN_URL = "http://codewords-api.herokuapp.com/api/login/";
+const HOME_URL = "http://codewords-api.herokuapp.com/";
 
 var styles = StyleSheet.create({
   container: {

@@ -10,11 +10,14 @@ import {
   Navigator,
   StyleSheet,
   Text,
+  TouchableHighlight,
   View
 } from 'react-native';
 
-import Board from './app/board'
+import Board from './app/board';
 import MyScene from './app/myscene';
+import About from './app/about.js';
+import MyGames from './app/mygames.js';
 
 
 class AwesomeProject extends Component {
@@ -24,7 +27,7 @@ class AwesomeProject extends Component {
   }
 
   loadCards() {
-    let fetchUrl = 'http://localhost:8000/api/cards/?game=43&count=25';
+    let fetchUrl = 'http://codewords-api.herokuapp.com/api/cards/?game=43&count=25';
     fetch(fetchUrl, {method: 'GET'})
     .then((response) => {
       response.json().then((json) => {
@@ -32,41 +35,78 @@ class AwesomeProject extends Component {
       }).done();
     }).done();
   }
-  
+
   componentDidMount() {
     this.loadCards();
   }
 
+  renderScene = (route, navigator) => {
+    console.log(this.state);
+    if (route.index === 0) {
+      // navigator.push(navigator.props.initialRouteStack[1]);
+      return (
+        <TouchableHighlight onPress={() => {
+          navigator.push({title: 'Board', index: 1 });
+        }}>
+          <Text>Go to board!</Text>
+        </TouchableHighlight>
+      )
+    } else if (route.title == 'Board') {
+      return (
+        <View style={styles.container}>
+          <Board cards={this.state.cards} activeIndex={null} />
+        </View>
+      )
+    } else {
+      return (
+        <TouchableHighlight onPress={() => {
+          navigator.pop();
+        }}>
+          <Text>Go back!</Text>
+        </TouchableHighlight>
+      )
+    }
+  }
+
+
   render() {
+    const routes = [
+      {title: 'Board', index: 0},
+      {title: 'First Scene', index: 0},
+      {title: 'Second Scene', index: 1},
+    ];
     return (
       <Navigator
-        initialRoute={{ title: 'The Initial Scene', index: 0 }}
-        renderScene={(route, navigator) =>
-          <MyScene
-            title={route.title}
-
-            // Function to call when a new scene should be displayed           
-            onForward={ () => {    
-              const nextIndex = route.index + 1;
-              navigator.push({
-                title: 'Scene ' + nextIndex,
-                index: nextIndex,
-              });
-            }}
-
-            // Function to call to go back to the previous scene
-            onBack={() => {
-              if (route.index > 0) {
-                navigator.pop();
-              }
-            }}
-          />
-        }
+        initialRoute={routes[0]}
+        initialRouteStack={routes}
+        renderScene={this.renderScene}
+        style={{ padding: 50 }}
+        navigationBar={
+         <Navigator.NavigationBar
+           routeMapper={{
+             LeftButton: (route, navigator, index, navState) =>
+              {
+                if (route.index === 0) {
+                  return null;
+                } else {
+                  return (
+                    <TouchableHighlight onPress={() => navigator.pop()}>
+                      <Text>Back</Text>
+                    </TouchableHighlight>
+                  );
+                }
+              },
+             RightButton: (route, navigator, index, navState) =>
+               { return (<Text>Done</Text>); },
+             Title: (route, navigator, index, navState) =>
+               { return (<Text>Codenames Home</Text>); },
+           }}
+           style={{backgroundColor: 'gray'}}
+     />
+  }
       />
 
-      // <View style={styles.container}>
-      //   <Board cards={this.state.cards} activeIndex={null} />
-      // </View>
+
     );
   }
 }
