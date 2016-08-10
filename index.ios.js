@@ -80,7 +80,7 @@ class AwesomeProject extends Component {
         initialRoute={routes[0]}
         initialRouteStack={routes}
         renderScene={this.renderScene}
-        style={{ padding: 50 }}
+        style={{ paddingTop: 80 }}
         navigationBar={
          <Navigator.NavigationBar
            routeMapper={{
@@ -127,13 +127,13 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
-  card: {
-    backgroundColor: '#D2BFA2',
-    flex: 1,
-    height: 20,
-    textAlign: 'center',
-    alignItems: 'center'
-  },
+  // card: {
+  //   backgroundColor: '#D2BFA2',
+  //   flex: 1,
+  //   height: 15,
+  //   textAlign: 'center',
+  //   alignItems: 'center'
+  // },
   active: {
     color: 'green',
   }

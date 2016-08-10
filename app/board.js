@@ -4,6 +4,7 @@ import {
   Text,
   View
 } from 'react-native';
+import Dimensions from 'Dimensions';
 import Card from './card'
 
 export default class Board extends Component {
@@ -16,6 +17,20 @@ export default class Board extends Component {
     this.setState({activeIndex: idx})
   }
 
+  _recalcSize = () => {
+    var {height, width} = Dimensions.get('window');
+    console.log('_REACALC_SIZE', width, height);
+    return width
+  }
+
+  componentWillMount = () => {
+    // this.setState({'width': this._recalcSize()});
+  }
+
+  _handleOnLayout = () => {
+    this.forceUpdate();
+  }
+
   render () {
     // console.log(this.props);
     // <View onLayout={(event) => {
@@ -24,18 +39,23 @@ export default class Board extends Component {
     console.log('board state:');
     console.log(this.state.activeIndex);
     const activeIndex = this.state.activeIndex;
+    let width = this._recalcSize();
+    console.log('BOARD RENDER', width);
+    // this._recalcSize();
     // const { onCardClick, activeIndex } = this.props;
     const cards = this.props.cards.map(
       (card, idx) =>
         <Card word={card.word.text}
               active={idx === activeIndex}
+              width={width / 5}
               // onClick={() => this.props.setCardActive(idx)}
               onClick={() => this.setCardActive(idx)}
               key={idx} />
     );
-    
+
     return (
-      <View style={styles.board}>
+      <View onLayout={this._handleOnLayout}
+            style={styles.board}>
         {cards}
       </View>
     );

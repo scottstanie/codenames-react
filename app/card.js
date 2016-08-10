@@ -1,3 +1,5 @@
+'use strict';
+
 import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
@@ -7,40 +9,60 @@ import {
 } from 'react-native';
 import Dimensions from 'Dimensions';
 
+let baseWordStyle = {
+  color: '#FFFFFF',
+  textAlign: 'center',
+  alignItems: 'center',
+  fontSize: 10,
+};
+
+let baseCardStyle = {
+  flex: 1,
+  height: 9,
+  backgroundColor: 'red',
+  borderRadius: 5,
+  justifyContent: 'center',
+  alignItems: 'center'
+};
+
 export default class Card extends Component {
-  // static propTypes = {
-    // onClick: PropTypes.func.isRequired,
-    // className: PropTypes.string,
-  // };
+  static propTypes = {
+    onClick: PropTypes.func.isRequired,
+  };
 
   constructor(props) {
     super(props);
     this.state = {pressing: false}
   }
 
-  // _onPressIn = () => {
-  //   this.setState({pressing: true});
-  // }
-
-  // _onPressOut = () => {
-  //   this.setState({pressing: false});
-  // }
-
   _onPress = () => {
     this.props.onClick();
   }
 
+  _handleOnLayout = () => {
+    this.forceUpdate();
+  }
+
   render() {
-    const {word, active, onClick} = this.props;
-    // console.log('card: ' + word + ' active? ' + active);
-    // var {height, width} = Dimensions.get('window');
-    // console.log("Dimensions: " + height + ' ' + width);
+    const {word, active, onClick, width} = this.props;
+
+    let newCardStyle = {
+      ...baseCardStyle,
+      'width': width,
+      'borderColor': active ? 'green' : 'black',
+      'borderWidth': active ? 2 : 1,
+    };
+    console.log("newCardStyle", newCardStyle);
+
+    // WHY IS THIS FAILING??
+    // let wordStyles = StyleSheet.create(baseWordStyle);
+    // let cardStyles = StyleSheet.create(baseCardStyle);
+    console.log("CARD Dimensions. desired: ", width, ' actual: ', newCardStyle.width);
     return (
-      <TouchableHighlight style={styles.touchable}
-                          onPress={this._onPress} >
-   
-        <View style={active ? styles.activeCard : styles.card } >
-          <Text style={styles.word} >
+      <TouchableHighlight onPress={this._onPress} >
+
+        <View style={ newCardStyle }>
+          <Text style={ baseWordStyle } >
             {word}
           </Text>
         </View>
@@ -50,37 +72,4 @@ export default class Card extends Component {
 
 };
 
-const styles = StyleSheet.create({
-  word: {
-    color: '#FFFFFF',
-    textAlign: 'center',
-    alignItems: 'center',
-    fontSize: 10,
-  },
-  card: {
-    flex: 1,
-    width: 350/5,
-    backgroundColor: 'red',
-    borderWidth: 1,
-    borderRadius: 5,
-    // height: 200,
-    // width: 200,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  activeCard: {
-    flex: 1,
-    width: 350/5,
-    backgroundColor: 'grey',
-    borderColor: 'green',
-    borderWidth: 2,
-    borderRadius: 5,
-    // height: 200,
-    // width: 200,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  touchable: {
-    // borderRadius: 1
-  },
-});
+
