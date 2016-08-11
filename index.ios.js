@@ -17,6 +17,7 @@ import {
 import Board from './app/board';
 import MyScene from './app/myscene';
 import About from './app/about.js';
+import Login from './app/asynclogin.js';
 import MyGames from './app/mygames.js';
 
 
@@ -27,7 +28,7 @@ class AwesomeProject extends Component {
   }
 
   loadCards() {
-    let fetchUrl = 'http://codewords-api.herokuapp.com/api/cards/?game=43&count=25';
+    let fetchUrl = 'https://codewords-api.herokuapp.com/api/cards/?game=43&count=25';
     fetch(fetchUrl, {method: 'GET'})
     .then((response) => {
       response.json().then((json) => {
@@ -40,24 +41,55 @@ class AwesomeProject extends Component {
     this.loadCards();
   }
 
+  _pushScene(navigator, title, index) {
+    navigator.push({ title: title, index: index });
+  }
+
   renderScene = (route, navigator) => {
-    console.log(this.state);
-    if (route.index === 0) {
-      // navigator.push(navigator.props.initialRouteStack[1]);
+    // console.log(this.state);
+    switch (route.title) {
+      case 'Home':
+
       return (
-        <TouchableHighlight onPress={() => {
-          navigator.push({title: 'Board', index: 1 });
-        }}>
-          <Text>Go to board!</Text>
-        </TouchableHighlight>
-      )
-    } else if (route.title == 'Board') {
-      return (
-        <View style={styles.container}>
-          <Board cards={this.state.cards} activeIndex={null} />
+        <View>
+          <TouchableHighlight onPress={() => this._pushScene(navigator, 'Board', 1)}
+                              style={styles.menuItem}>
+            <Text style={styles.menuText}>Board</Text>
+          </TouchableHighlight>
+
+          <TouchableHighlight onPress={() => this._pushScene(navigator, 'Login', 1)}
+                              style={styles.menuItem}>
+            <Text style={styles.menuText}>Login</Text>
+          </TouchableHighlight>
+
+          <TouchableHighlight onPress={() => this._pushScene(navigator, 'About', 1)}
+                              style={styles.menuItem}>
+            <Text style={styles.menuText}>About</Text>
+          </TouchableHighlight>
         </View>
       )
-    } else {
+
+    case 'Board':
+      return (
+        <View style={styles.container}>
+          <Board navigator={navigator}
+                 cards={this.state.cards}
+                 activeIndex={null} />
+        </View>
+      )
+    case 'About':
+      return (
+        <View style={styles.container}>
+          <About navigator={navigator}/>
+        </View>
+      )
+    case 'Login':
+      return (
+        <View style={styles.container}>
+          <Login navigator={navigator} />
+        </View>
+      )
+    default:
       return (
         <TouchableHighlight onPress={() => {
           navigator.pop();
@@ -70,15 +102,10 @@ class AwesomeProject extends Component {
 
 
   render() {
-    const routes = [
-      {title: 'Board', index: 0},
-      {title: 'First Scene', index: 0},
-      {title: 'Second Scene', index: 1},
-    ];
+
     return (
       <Navigator
-        initialRoute={routes[0]}
-        initialRouteStack={routes}
+        initialRoute={{title: 'Home', index: 0}}
         renderScene={this.renderScene}
         style={{ paddingTop: 80 }}
         navigationBar={
@@ -112,6 +139,14 @@ class AwesomeProject extends Component {
 }
 
 const styles = StyleSheet.create({
+  menuText: {
+    fontSize: 20,
+    textAlign: 'center',
+  },
+  menuItem: {
+    borderWidth: 1,
+    borderRadius: 3,
+  },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -122,21 +157,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-  // card: {
-  //   backgroundColor: '#D2BFA2',
-  //   flex: 1,
-  //   height: 15,
-  //   textAlign: 'center',
-  //   alignItems: 'center'
-  // },
-  active: {
-    color: 'green',
-  }
+
 });
 
 AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);

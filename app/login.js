@@ -1,10 +1,10 @@
 import React, {StyleSheet, View, WebView, Component} from 'react-native';
-import CookieManager from 'react-native-cookies';
+
 import LoggedIn from './LoggedIn'
 
 // Change these to reflect
-const LOGIN_URL = "http://codewords-api.herokuapp.com/api/login/";
-const HOME_URL = "http://codewords-api.herokuapp.com/";
+const LOGIN_URL = "https://codewords-api.herokuapp.com/api/login/";
+const HOME_URL = "https://codewords-api.herokuapp.com/";
 
 var styles = StyleSheet.create({
   container: {

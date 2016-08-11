@@ -39,18 +39,14 @@ export default class Card extends Component {
     this.props.onClick();
   }
 
-  _handleOnLayout = () => {
-    this.forceUpdate();
-  }
-
   render() {
     const {word, active, onClick, width} = this.props;
 
     let newCardStyle = {
       ...baseCardStyle,
-      'width': width,
-      'borderColor': active ? 'green' : 'black',
-      'borderWidth': active ? 2 : 1,
+      width: width,
+      borderColor: active ? 'green' : 'black',
+      borderWidth: active ? 2 : 1,
     };
     console.log("newCardStyle", newCardStyle);
 
