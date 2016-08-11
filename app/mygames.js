@@ -11,15 +11,27 @@ export default class MyGames extends Component {
 		super(props);
 	}
 
+  componentDidMount() {
+    try {
+      // Get the auth token to check they are logged in
+      const token = this.props._getToken();
+      console.log(token);
+    } catch (error) {
+      console.log('mygames check token error: ', error);
+      this.props.navigator.push({ title: 'Login', index: 1 })
+    }
+    // this.loadCards();
+  }
+
   _fetchGames = () => {
     fetchUrl = 'https://codewords-api.herokuapp.com/api/games/user/'
-    // var csrftoken = this.getCSRFToken(home_url);
+
     fetch(fetchUrl, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        // 'Content-Type': 'application/json',
-        // 'X-CSRFToken': csrftoken,
+        'Content-Type': 'application/json',
+
       },
       body: JSON.stringify({
         email: this.state.email,
@@ -35,10 +47,12 @@ export default class MyGames extends Component {
   }
 
 	render() {
-		<ListView>
-			<View>
-				<Text>My Games</Text>
-			</View>
-		</ListView>
+    return (
+  		// <ListView>
+  			<View>
+  				<Text>My Games</Text>
+  			</View>
+  		// </ListView>
+    )
 	}
 }

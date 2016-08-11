@@ -28,21 +28,6 @@ export default class Login extends Component {
     }
   }
 
-  _getToken() {
-    try {
-      const value = AsyncStorage.getItem('@TokenStore');
-      if (value !== null) {
-        // We have data!!
-        value.then((result) => {
-          console.log('getToken result: ', result);
-          return result;
-        });
-      }
-    } catch (error) {
-      // Error retrieving data
-      console.log(error);
-    }
-  }
 
   _onSubmit = () => {
     fetchUrl = 'https://codewords-api.herokuapp.com/api/auth/login/'
@@ -64,6 +49,7 @@ export default class Login extends Component {
           // console.log('respJson.key: ', respJson.key);
           this._storeToken(respJson.key);
           // Success!
+          this.props.navigator.replace({ title: 'Home', index: 1 });
           return true;
 
         } else {
@@ -78,9 +64,7 @@ export default class Login extends Component {
 
 
   render() {
-    // this._storeToken('mytoken');
-    // this._getToken();
-    console.log(this.props);
+
     return (
       <View>
         <Text>

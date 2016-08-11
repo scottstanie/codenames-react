@@ -13,6 +13,30 @@ export default class Board extends Component {
     this.state = {activeIndex: null}
   }
 
+  loadCards() {
+    let fetchUrl = 'https://codewords-api.herokuapp.com/api/cards/?game=43&count=25';
+    fetch(fetchUrl, {method: 'GET'})
+    .then((response) => {
+      response.json().then((json) => {
+        this.setState({'cards' : json.results});
+      }).done();
+    }).done();
+  }
+
+
+  componentDidMount() {
+    try {
+      // Get the auth token to check they are logged in
+      const token = this._getToken();
+      console.log(token);
+    } catch (error) {
+      console.log('Board check token error: ', error);
+      this.props.navigator.push({ title: 'Login', index: 1 })
+    }
+    this.loadCards();
+  }
+
+
   setCardActive = (idx) => {
     this.setState({activeIndex: idx})
   }

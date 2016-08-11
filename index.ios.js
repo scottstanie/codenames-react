@@ -7,6 +7,7 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
+  AsyncStorage,
   Navigator,
   StyleSheet,
   Text,
@@ -27,19 +28,6 @@ class AwesomeProject extends Component {
     this.state = { 'cards': [] }
   }
 
-  loadCards() {
-    let fetchUrl = 'https://codewords-api.herokuapp.com/api/cards/?game=43&count=25';
-    fetch(fetchUrl, {method: 'GET'})
-    .then((response) => {
-      response.json().then((json) => {
-        this.setState({'cards' : json.results});
-      }).done();
-    }).done();
-  }
-
-  componentDidMount() {
-    this.loadCards();
-  }
 
   _pushScene(navigator, title, index) {
     navigator.push({ title: title, index: index });
@@ -62,6 +50,11 @@ class AwesomeProject extends Component {
             <Text style={styles.menuText}>Login</Text>
           </TouchableHighlight>
 
+          <TouchableHighlight onPress={() => this._pushScene(navigator, 'My Games', 1)}
+                              style={styles.menuItem}>
+            <Text style={styles.menuText}>My Games</Text>
+          </TouchableHighlight>
+
           <TouchableHighlight onPress={() => this._pushScene(navigator, 'About', 1)}
                               style={styles.menuItem}>
             <Text style={styles.menuText}>About</Text>
@@ -74,19 +67,27 @@ class AwesomeProject extends Component {
         <View style={styles.container}>
           <Board navigator={navigator}
                  cards={this.state.cards}
-                 activeIndex={null} />
-        </View>
-      )
-    case 'About':
-      return (
-        <View style={styles.container}>
-          <About navigator={navigator}/>
+                 activeIndex={null}
+                 _getToken={this._getToken} />
         </View>
       )
     case 'Login':
       return (
         <View style={styles.container}>
           <Login navigator={navigator} />
+        </View>
+      )
+    case 'About':
+      return (
+        <View style={styles.container}>
+          <About navigator={navigator} />
+        </View>
+      )
+    case 'My Games':
+      return (
+        <View style={styles.container}>
+          <MyGames navigator={navigator}
+                   _getToken={this._getToken} />
         </View>
       )
     default:
@@ -97,6 +98,23 @@ class AwesomeProject extends Component {
           <Text>Go back!</Text>
         </TouchableHighlight>
       )
+    }
+  }
+
+  _getToken() {
+    // Used in several components to check the login auth token
+    try {
+      const value = AsyncStorage.getItem('@TokenStore');
+      if (value !== null) {
+        // We have data!!
+        value.then((result) => {
+          console.log('getToken result: ', result);
+          return result;
+        });
+      }
+    } catch (error) {
+      // Error retrieving data
+      console.log(error);
     }
   }
 
