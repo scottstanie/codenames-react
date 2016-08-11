@@ -15,8 +15,7 @@ import {
   View
 } from 'react-native';
 
-import Board from './app/board';
-import MyScene from './app/myscene';
+import BoardWrapper from './app/boardwrapper';
 import About from './app/about.js';
 import Login from './app/asynclogin.js';
 import MyGames from './app/mygames.js';
@@ -65,7 +64,7 @@ class AwesomeProject extends Component {
     case 'Board':
       return (
         <View style={styles.container}>
-          <Board navigator={navigator}
+          <BoardWrapper navigator={navigator}
                  cards={this.state.cards}
                  activeIndex={null}
                  _getToken={this._getToken} />
