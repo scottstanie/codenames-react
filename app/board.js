@@ -27,7 +27,7 @@ export default class Board extends Component {
   }
 
 
-  render () {
+  render() {
     let width = this._recalcSize();
     let cardWidth = width / 5;
     let cardData = this.props.cardData;

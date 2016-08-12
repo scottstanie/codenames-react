@@ -24,7 +24,7 @@ import MyGames from './app/mygames.js';
 class AwesomeProject extends Component {
   constructor(props) {
     super(props);
-    this.state = { 'cardSets': {} }
+    this.state = { currentGameId: 0 }
   }
 
 
@@ -45,71 +45,79 @@ class AwesomeProject extends Component {
     navigator.push({ title: title, index: index });
   }
 
+  _handleGameClick = (navigator, gameId) => {
+    this.setState({ currentGameId: gameId });
+    this._pushScene(navigator, 'Board', 1);
+  }
+
   renderScene = (route, navigator) => {
     // console.log(this.state);
     switch (route.title) {
       case 'Home':
 
-      return (
-        <View>
-          <TouchableHighlight onPress={() => this._pushScene(navigator, 'Board', 1)}
-                              style={styles.menuItem}>
-            <Text style={styles.menuText}>Board</Text>
-          </TouchableHighlight>
+        return (
+          <View>
+            <TouchableHighlight onPress={() => this._pushScene(navigator, 'Board', 1)}
+                                style={styles.menuItem}>
+              <Text style={styles.menuText}>Board</Text>
+            </TouchableHighlight>
 
-          <TouchableHighlight onPress={() => this._pushScene(navigator, 'Login', 1)}
-                              style={styles.menuItem}>
-            <Text style={styles.menuText}>Login</Text>
-          </TouchableHighlight>
+            <TouchableHighlight onPress={() => this._pushScene(navigator, 'Login', 1)}
+                                style={styles.menuItem}>
+              <Text style={styles.menuText}>Login</Text>
+            </TouchableHighlight>
 
-          <TouchableHighlight onPress={() => this._pushScene(navigator, 'My Games', 1)}
-                              style={styles.menuItem}>
-            <Text style={styles.menuText}>My Games</Text>
-          </TouchableHighlight>
+            <TouchableHighlight onPress={() => this._pushScene(navigator, 'My Games', 1)}
+                                style={styles.menuItem}>
+              <Text style={styles.menuText}>My Games</Text>
+            </TouchableHighlight>
 
-          <TouchableHighlight onPress={() => this._pushScene(navigator, 'About', 1)}
-                              style={styles.menuItem}>
-            <Text style={styles.menuText}>About</Text>
-          </TouchableHighlight>
-        </View>
-      )
+            <TouchableHighlight onPress={() => this._pushScene(navigator, 'About', 1)}
+                                style={styles.menuItem}>
+              <Text style={styles.menuText}>About</Text>
+            </TouchableHighlight>
+          </View>
+        )
 
-    case 'Board':
-      return (
-        <View style={styles.container}>
-          <BoardWrapper navigator={navigator}
-                 cards={this.state.cards}
-                 activeIndex={null}
-                 _getToken={this._getToken} />
-        </View>
-      )
-    case 'Login':
-      return (
-        <View style={styles.container}>
-          <Login navigator={navigator} />
-        </View>
-      )
-    case 'About':
-      return (
-        <View style={styles.container}>
-          <About navigator={navigator} />
-        </View>
-      )
-    case 'My Games':
-      return (
-        <View style={styles.container}>
-          <MyGames navigator={navigator}
-                   _getToken={this._getToken} />
-        </View>
-      )
-    default:
-      return (
-        <TouchableHighlight onPress={() => {
-          navigator.pop();
-        }}>
-          <Text>Go back!</Text>
-        </TouchableHighlight>
-      )
+      case 'Board':
+        console.log('BOARD CASE: ', this.state);
+        return (
+          <View style={styles.container}>
+            <BoardWrapper navigator={navigator}
+                   activeIndex={null}
+                   _getToken={this._getToken}
+                   gameId={this.state.currentGameId} />
+          </View>
+        )
+      case 'Login':
+        return (
+          <View style={styles.container}>
+            <Login navigator={navigator} />
+          </View>
+        )
+      case 'About':
+        return (
+          <View style={styles.container}>
+            <About navigator={navigator} />
+          </View>
+        )
+      case 'My Games':
+        return (
+          <View style={styles.container}>
+            <MyGames navigator={navigator}
+                     _getToken={this._getToken}
+                     cards={this.state.cards}
+                     _handleGameClick={this._handleGameClick} />
+          </View>
+        )
+      default:
+        return (
+          <TouchableHighlight onPress={() => {
+            navigator.pop();
+          }}>
+            <Text>Go back!</Text>
+          </TouchableHighlight>
+        )
     }
   }
 

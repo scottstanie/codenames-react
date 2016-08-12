@@ -44,15 +44,17 @@ export default class MyGames extends Component {
       });
   }
 
-	render() {
+
+  render() {
+    let { _handleGameClick } = this.props;
     return (
-  		<ListView dataSource={this.state.dataSource}
-                renderRow={(rowData) => {
-                  <TouchableHighlight style={styles.gameRow}>
-                    <Text style={styles.gameRowText}>{rowData.id}, {rowData.current_turn}</Text>
+      <ListView dataSource={this.state.dataSource}
+                renderRow={(rowData) =>
+                  <TouchableHighlight style={styles.gameRow}
+                                      onPress={_handleGameClick(this.props.navigator, rowData.id)}>
+                    <Text style={styles.gameRowText}> {rowData.id}, {rowData.current_turn} </Text>
                   </TouchableHighlight>
-                }}
-      />
+                } />
 
     )
 	}

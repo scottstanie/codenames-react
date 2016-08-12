@@ -11,6 +11,7 @@ import Board from './board';
 export default class BoardWrapper extends Component {
   constructor(props) {
     super(props);
+    this.state = { cardData: [] }
   }
 
   componentDidMount() {
@@ -22,7 +23,7 @@ export default class BoardWrapper extends Component {
       console.log('BoardWrapper check token error: ', error);
       this.props.navigator.push({ title: 'Login', index: 1 })
     }
-    let cardPromise = this.loadCards(44);
+    let cardPromise = this.loadCards(this.props.gameId);
     console.log('card results', cardPromise);
     // Resolve promise
     cardPromise.then((cardData) => {
@@ -30,7 +31,7 @@ export default class BoardWrapper extends Component {
     });
   }
 
-  render () {
+  render() {
 
     let { cardData, gameId } = this.props;
             // style={styles.boardWrapper}>
