@@ -32,6 +32,7 @@ export default class Board extends Component {
     let cardWidth = width / 5;
     let cardData = this.props.cardData;
     let activeIndex = this.state.activeIndex;
+    console.log("board.js- cardData = ", cardData)
 
     const cards = cardData.map(
       (card, idx) =>

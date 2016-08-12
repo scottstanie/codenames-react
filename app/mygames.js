@@ -51,7 +51,7 @@ export default class MyGames extends Component {
       <ListView dataSource={this.state.dataSource}
                 renderRow={(rowData) =>
                   <TouchableHighlight style={styles.gameRow}
-                                      onPress={_handleGameClick(this.props.navigator, rowData.id)}>
+                                      onPress={() => _handleGameClick(this.props.navigator, rowData.id)}>
                     <Text style={styles.gameRowText}> {rowData.id}, {rowData.current_turn} </Text>
                   </TouchableHighlight>
                 } />

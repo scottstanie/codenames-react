@@ -14,6 +14,19 @@ export default class BoardWrapper extends Component {
     this.state = { cardData: [] }
   }
 
+
+  loadCards(gameId) {
+    let fetchUrl = 'https://codewords-api.herokuapp.com/api/cards/?gameId=' + gameId + '&count=25';
+    return fetch(fetchUrl)
+      .then((response) => {
+        return response.json()
+      })
+      .then((responseJson) => {
+        // Returns but a mere promise of results
+        return responseJson.results;
+      });
+  }
+
   componentDidMount() {
     try {
       // Get the auth token to check they are logged in
@@ -23,21 +36,24 @@ export default class BoardWrapper extends Component {
       console.log('BoardWrapper check token error: ', error);
       this.props.navigator.push({ title: 'Login', index: 1 })
     }
+    console.log('gameid', this.props.gameId);
     let cardPromise = this.loadCards(this.props.gameId);
-    console.log('card results', cardPromise);
     // Resolve promise
     cardPromise.then((cardData) => {
+      console.log('card results', cardData);
       this.setState({cardData: cardData});
     });
   }
 
+
   render() {
 
-    let { cardData, gameId } = this.props;
+    let { gameId } = this.props;
             // style={styles.boardWrapper}>
+    console.log('board wrapper: ', this.state.cardData);
     return (
       <View >
-        <Board cardData={ cardData[gameId] } />
+        <Board cardData={ this.state.cardData } />
       </View>
     );
   }
