@@ -28,19 +28,6 @@ class AwesomeProject extends Component {
   }
 
 
-  loadCards(gameId) {
-    let fetchUrl = 'https://codewords-api.herokuapp.com/api/cards/?game=' + gameId + '&count=25';
-    return fetch(fetchUrl)
-      .then((response) => {
-        return response.json()
-      })
-      .then((responseJson) => {
-        // Returns but a mere promise of results
-        return responseJson.results;
-      });
-  }
-
-
   _pushScene(navigator, title, index) {
     navigator.push({ title: title, index: index });
   }
@@ -131,6 +118,9 @@ class AwesomeProject extends Component {
           console.log('getToken result: ', result);
           return result;
         });
+      } else {
+        console.log('BoardWrapper token check: token = ', token);
+        this.props.navigator.push({ title: 'Login', index: 1 })
       }
     } catch (error) {
       // Error retrieving data

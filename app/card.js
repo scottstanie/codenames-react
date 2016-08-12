@@ -19,7 +19,7 @@ let baseWordStyle = {
 let baseCardStyle = {
   flex: 1,
   height: 9,
-  backgroundColor: 'red',
+  // backgroundColor: 'red',
   borderRadius: 5,
   justifyContent: 'center',
   alignItems: 'center'
@@ -40,20 +40,22 @@ export default class Card extends Component {
   }
 
   render() {
-    const {word, active, onClick, width} = this.props;
+    const {word, color, chosen, active, onClick, width} = this.props;
 
     let newCardStyle = {
       ...baseCardStyle,
       width: width,
-      borderColor: active ? 'green' : 'black',
+      borderColor: (active || chosen) ? 'green' : 'black',
       borderWidth: active ? 2 : 1,
+      backgroundColor: color,
+
     };
-    console.log("newCardStyle", newCardStyle);
+    // console.log("newCardStyle", newCardStyle);
 
     // WHY IS THIS FAILING??
     // let wordStyles = StyleSheet.create(baseWordStyle);
     // let cardStyles = StyleSheet.create(baseCardStyle);
-    console.log("CARD Dimensions. desired: ", width, ' actual: ', newCardStyle.width);
+    // console.log("CARD Dimensions. desired: ", width, ' actual: ', newCardStyle.width);
     return (
       <TouchableHighlight onPress={this._onPress} >
 
