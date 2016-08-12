@@ -24,7 +24,20 @@ import MyGames from './app/mygames.js';
 class AwesomeProject extends Component {
   constructor(props) {
     super(props);
-    this.state = { 'cards': [] }
+    this.state = { 'cardSets': {} }
+  }
+
+
+  loadCards(gameId) {
+    let fetchUrl = 'https://codewords-api.herokuapp.com/api/cards/?game=' + gameId + '&count=25';
+    return fetch(fetchUrl)
+      .then((response) => {
+        return response.json()
+      })
+      .then((responseJson) => {
+        // Returns but a mere promise of results
+        return responseJson.results;
+      });
   }
 
 

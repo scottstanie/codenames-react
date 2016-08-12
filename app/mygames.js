@@ -9,6 +9,10 @@ import {
 export default class MyGames extends Component {
 	constructor(props) {
 		super(props);
+    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      dataSource: ds.cloneWithRows([{id: 1, current_turn: 'red_give'}]),
+    };
 	}
 
   componentDidMount() {
@@ -20,39 +24,31 @@ export default class MyGames extends Component {
       console.log('mygames check token error: ', error);
       this.props.navigator.push({ title: 'Login', index: 1 })
     }
-    // this.loadCards();
+    this._fetchGames();
   }
 
   _fetchGames = () => {
-    fetchUrl = 'https://codewords-api.herokuapp.com/api/games/user/'
+    fetchUrl = 'https://codewords-api.herokuapp.com/api/games/'
 
-    fetch(fetchUrl, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-
-      },
-      body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.password
-      })
-    }).then((response) => {
-      response.json().then((respJson) => {
-        console.log(respJson);
-        console.log(respJson.key);
-        // this._storeToken(respJson.key);
-      }).catch((err) => {console.log(err);}).done();
-    }).done();
+    fetch(fetchUrl)
+      .then((response) => {
+        return response.json()
+      }).then((responseJson) => {
+        console.log('mygames fetch: ', responseJson.results);
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(responseJson.results)
+        })
+      }).catch((err) => {
+        console.log(err);
+      });
   }
 
 	render() {
     return (
-  		// <ListView>
-  			<View>
-  				<Text>My Games</Text>
-  			</View>
-  		// </ListView>
+  		<ListView dataSource={this.state.dataSource}
+                renderRow={(rowData) => <Text>{rowData.id}, {rowData.current_turn}</Text>}
+      />
+
     )
 	}
 }
