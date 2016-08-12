@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
-  Text,
   ListView,
+  Text,
+  TouchableHighlight,
   View
 } from 'react-native';
 
@@ -46,9 +47,23 @@ export default class MyGames extends Component {
 	render() {
     return (
   		<ListView dataSource={this.state.dataSource}
-                renderRow={(rowData) => <Text>{rowData.id}, {rowData.current_turn}</Text>}
+                renderRow={(rowData) => {
+                  <TouchableHighlight style={styles.gameRow}>
+                    <Text style={styles.gameRowText}>{rowData.id}, {rowData.current_turn}</Text>
+                  </TouchableHighlight>
+                }}
       />
 
     )
 	}
 }
+
+const styles = StyleSheet.create({
+  gameRowText: {
+    fontSize: 20,
+    textAlign: 'center',
+  },
+  gameRow: {
+    margin: 10,
+  }
+})

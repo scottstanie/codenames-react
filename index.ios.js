@@ -1,7 +1,7 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
+ * Codenames React Native App
+ * https://github.com/scottstanie/codenames-react
+ * Author: Scott Staniewicz
  */
 
 import React, { Component } from 'react';
