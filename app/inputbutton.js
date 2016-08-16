@@ -1,6 +1,7 @@
 'use strict';
 import React, { Component, PropTypes } from 'react';
 import {
+  Picker,
   StyleSheet,
   Text,
   TextInput,
@@ -12,7 +13,7 @@ import Button from 'apsl-react-native-button'
 export default class InputButton extends Component {
 	constructor(props) {
 		super(props);
-    this.state = {clue: '', guess: ''}
+    this.state = {clue: '', cardCount: '', guess: ''}
 	}
 
 
@@ -29,13 +30,25 @@ export default class InputButton extends Component {
     } else if (isGiver) {
                                       // onPress={() => _handleGameClick(navigator, rowData.id)}>
       inputButton = <View style={styles.giveWrap}>
+                      <View>
+                        <TextInput
+                          style={{height: 40, width:200, borderColor: 'gray', borderWidth: 1}}
+                          onChangeText={(text) => this.setState({clue: text})}
+                          />
+                        <Picker selectedValue={this.state.cardCount}
+                                  onValueChange={(count) => this.setState({cardCount: count})}>
+                          <Picker.Item label="zero" value="0" />
+                          <Picker.Item label="one" value="1" />
+                          <Picker.Item label="two" value="2" />
+                          <Picker.Item label="three" value="3" />
+                          <Picker.Item label="four" value="4" />
+                          <Picker.Item label="five" value="5" />
+                        </Picker>
+                      </View>
+
                       <Button style={styles.button} textStyle={styles.buttonText} >
                         Give Clue
                       </Button>
-                      <TextInput
-                        style={{height: 40, width:200, borderColor: 'gray', borderWidth: 1}}
-                        onChangeText={(text) => this.setState({clue: text})}
-                        />
                       </View>
     }
 
