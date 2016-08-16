@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import Dimensions from 'Dimensions';
 import Card from './card'
+import InputButton from './inputbutton'
 
 export default class Board extends Component {
   constructor(props) {
@@ -30,9 +31,10 @@ export default class Board extends Component {
   render() {
     let width = this._recalcSize();
     let cardWidth = width / 5;
-    let cardData = this.props.cardData;
+    let { isGiver, cardData } = this.props;
     let activeIndex = this.state.activeIndex;
     // console.log("board.js- cardData = ", cardData)
+    console.log("board.js- isgiver = ", isGiver)
 
     const cards = cardData.map(
       (card, idx) =>
@@ -41,14 +43,18 @@ export default class Board extends Component {
               width={cardWidth}
               color={card.color}
               chosen={card.chosen}
+              isGiver={isGiver}
               // onClick={() => this.props.setCardActive(idx)}
               onClick={() => this.setCardActive(idx)}
               key={idx} />
     );
 
+        // <InputButton gameId={this.props.gameId} _getToken={this.props._getToken}/>
     return (
-      <View onLayout={this._handleOnLayout} style={styles.board}>
-        {cards}
+      <View>
+        <View onLayout={this._handleOnLayout} style={styles.board}>
+          {cards}
+        </View>
       </View>
     );
   }
@@ -58,6 +64,7 @@ const styles = StyleSheet.create({
   board: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    flex: 5
     // backgroundColor: '#dce2e5',
     // backgroundColor: '#000000',
   }

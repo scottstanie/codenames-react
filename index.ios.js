@@ -136,7 +136,7 @@ class AwesomeProject extends Component {
       <Navigator
         initialRoute={{title: 'Home', index: 0}}
         renderScene={this.renderScene}
-        style={{ paddingTop: 80 }}
+        style={{ paddingTop: 55 }}
         navigationBar={
          <Navigator.NavigationBar
            routeMapper={{
@@ -157,7 +157,7 @@ class AwesomeProject extends Component {
              Title: (route, navigator, index, navState) =>
                { return (<Text>Codenames Home</Text>); },
            }}
-           style={{backgroundColor: 'gray'}}
+           style={{backgroundColor: 'gray', height: 50}}
      />
   }
       />

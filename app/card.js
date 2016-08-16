@@ -18,7 +18,7 @@ let baseWordStyle = {
 
 let baseCardStyle = {
   flex: 1,
-  height: 9,
+  height: 8,
   // backgroundColor: 'red',
   borderRadius: 5,
   justifyContent: 'center',
@@ -47,7 +47,7 @@ export default class Card extends Component {
       active,
       onClick,
       width,
-      isGuesser
+      isGiver
     } = this.props;
 
     let borderMap = {
@@ -60,7 +60,7 @@ export default class Card extends Component {
       borderColor: (chosen ? 'orange' :
                     active ? 'green': 'black'),
       borderWidth: (active || chosen) ? 3 : 1,
-      backgroundColor: (isGuesser || chosen) ? color : '#cdb54c',
+      backgroundColor: (isGiver || chosen) ? color : '#cdb54c',
 
     };
 
