@@ -6,6 +6,7 @@ import {
   TouchableHighlight,
   View
 } from 'react-native';
+import Button from 'apsl-react-native-button'
 
 export default class MyGames extends Component {
 	constructor(props) {
@@ -48,12 +49,13 @@ export default class MyGames extends Component {
   render() {
     let { _handleGameClick } = this.props;
     return (
-      <ListView dataSource={this.state.dataSource}
+      <ListView style={{flexDirection: 'row', flex: 1}}
+                dataSource={this.state.dataSource}
                 renderRow={(rowData) =>
-                  <TouchableHighlight style={styles.gameRow}
+                  <Button style={styles.gameRow} textStyle={styles.gameRowText}
                                       onPress={() => _handleGameClick(this.props.navigator, rowData.id)}>
-                    <Text style={styles.gameRowText}> {rowData.id}, {rowData.current_turn} </Text>
-                  </TouchableHighlight>
+                    {rowData.id}, {rowData.current_turn}
+                  </Button>
                 } />
 
     )
@@ -67,5 +69,7 @@ const styles = StyleSheet.create({
   },
   gameRow: {
     margin: 10,
+    width: 150,
+    backgroundColor: 'red',
   }
 })

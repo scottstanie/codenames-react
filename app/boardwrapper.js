@@ -16,7 +16,7 @@ export default class BoardWrapper extends Component {
 
 
   loadCards(gameId) {
-    let fetchUrl = 'https://codewords-api.herokuapp.com/api/cards/?gameId=' + gameId + '&count=25';
+    let fetchUrl = 'https://codewords-api.herokuapp.com/api/cards/?game=' + gameId + '&count=25';
     return fetch(fetchUrl)
       .then((response) => {
         return response.json()
