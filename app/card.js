@@ -40,16 +40,31 @@ export default class Card extends Component {
   }
 
   render() {
-    const {word, color, chosen, active, onClick, width} = this.props;
+    const {
+      word,
+      color,
+      chosen,
+      active,
+      onClick,
+      width,
+      isGuesser
+    } = this.props;
 
+    let borderMap = {
+      active: 'green',
+      chosen: 'orange'
+    }
     let newCardStyle = {
       ...baseCardStyle,
       width: width,
-      borderColor: (active || chosen) ? 'green' : 'black',
-      borderWidth: active ? 2 : 1,
-      backgroundColor: color,
+      borderColor: (chosen ? 'orange' :
+                    active ? 'green': 'black'),
+      borderWidth: (active || chosen) ? 3 : 1,
+      backgroundColor: (isGuesser || chosen) ? color : '#cdb54c',
 
     };
+
+    // console.log("Card", chosen, newCardStyle.borderColor);
     // console.log("newCardStyle", newCardStyle);
 
     // WHY IS THIS FAILING??
