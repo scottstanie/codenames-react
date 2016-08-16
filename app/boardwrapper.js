@@ -1,3 +1,4 @@
+'use strict';
 import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
@@ -7,6 +8,7 @@ import {
 import Dimensions from 'Dimensions';
 import Card from './card'
 import Board from './board';
+import InputButton from './inputbutton'
 
 export default class BoardWrapper extends Component {
   constructor(props) {
@@ -48,12 +50,13 @@ export default class BoardWrapper extends Component {
 
   render() {
 
-    let { gameId } = this.props;
+    let { gameId, _getToken } = this.props;
             // style={styles.boardWrapper}>
     console.log('board wrapper: ', this.state.cardData);
     return (
       <View >
         <Board cardData={ this.state.cardData } />
+        <InputButton gameId={gameId} _getToken={_getToken}/>
       </View>
     );
   }

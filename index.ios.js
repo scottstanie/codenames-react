@@ -3,6 +3,7 @@
  * https://github.com/scottstanie/codenames-react
  * Author: Scott Staniewicz
  */
+'use strict';
 
 import React, { Component } from 'react';
 import {

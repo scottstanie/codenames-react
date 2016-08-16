@@ -1,9 +1,9 @@
+'use strict';
 import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
   ListView,
   Text,
-  TouchableHighlight,
   View
 } from 'react-native';
 import Button from 'apsl-react-native-button'
@@ -30,7 +30,7 @@ export default class MyGames extends Component {
   }
 
   _fetchGames = () => {
-    fetchUrl = 'https://codewords-api.herokuapp.com/api/games/'
+    let fetchUrl = 'https://codewords-api.herokuapp.com/api/games/'
 
     fetch(fetchUrl)
       .then((response) => {
