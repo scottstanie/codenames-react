@@ -13,7 +13,7 @@ import Button from 'apsl-react-native-button'
 export default class InputButton extends Component {
 	constructor(props) {
 		super(props);
-    this.state = {clue: '', cardCount: '', guess: ''}
+    this.state = {clue: 'Your clue:', cardCount: 'Number of cards:', guess: ''}
 	}
 
 
@@ -33,11 +33,11 @@ export default class InputButton extends Component {
       inputButton = <View style={styles.giveWrap}>
 
                         <TextInput
-                          style={{height: 40, width:100, borderColor: 'gray', borderWidth: 1}}
+                          style={{height: 40, width:150, borderColor: 'gray', borderWidth: 1}}
                           onChangeText={(text) => this.setState({clue: text})}
                           value={this.state.clue}
                           />
-                        <TextInput style={{height: 40, width:100,borderColor: 'gray', borderWidth: 1}}
+                        <TextInput style={{height: 40, width:150,borderColor: 'gray', borderWidth: 1}}
                           keyboardType="phone-pad"
                           onChangeText={(text) => this.setState({cardCount: text})}
                           value={this.state.cardCount}

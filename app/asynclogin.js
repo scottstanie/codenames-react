@@ -31,6 +31,7 @@ export default class Login extends Component {
 
   _onSubmit = () => {
     fetchUrl = 'https://codewords-api.herokuapp.com/api/auth/login/'
+    // fetchUrl = 'http://localhost:8000/api/auth/login/'
 
     fetch(fetchUrl, {
       method: 'POST',

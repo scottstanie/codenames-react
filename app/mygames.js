@@ -31,6 +31,7 @@ export default class MyGames extends Component {
 
   _fetchGames = () => {
     let fetchUrl = 'https://codewords-api.herokuapp.com/api/games/'
+    // let fetchUrl = 'http://localhost:8000/api/games/'
 
     fetch(fetchUrl)
       .then((response) => {

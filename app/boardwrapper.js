@@ -20,6 +20,7 @@ export default class BoardWrapper extends Component {
 
   loadCards(gameId) {
     let fetchUrl = 'https://codewords-api.herokuapp.com/api/cards/?game=' + gameId + '&count=25';
+    // let fetchUrl = 'http://localhost:8000/api/cards/?game=' + gameId + '&count=25';
     return fetch(fetchUrl)
       .then((response) => {
         return response.json()
@@ -33,6 +34,7 @@ export default class BoardWrapper extends Component {
   loadGameRole(gameId) {
 
     let fetchUrl = 'https://codewords-api.herokuapp.com/game_role/' + gameId;
+    // let fetchUrl = 'http://localhost:8000/game_role/' + gameId;
     return AsyncStorage.getItem('@TokenStore').then((token) => {
 
       return fetch(fetchUrl, {
